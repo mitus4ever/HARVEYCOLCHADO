@@ -3,28 +3,32 @@ import pandas as pd
 import plotly.express as px
 from datetime import datetime
 
-# Configuración de la página
+# ===============================
+# CONFIGURACIÓN DE LA PÁGINA
+# ===============================
 st.set_page_config(
     page_title="Harvey Colchado | #1 Ahora Nación",
-    page_icon="⚖️",
+    page_icon="🗳️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Estilos personalizados (Branding Ahora Nación)
-st.markdown("""
+# ===============================
+# ESTILOS PERSONALIZADOS
+# ===============================
+st.markdown(
+    """
     <style>
-    /* Colores principales */
     :root {
         --primary-blue: #1e3a8a;
         --accent-green: #064e3b;
         --highlight-yellow: #facc15;
     }
-    
+
     .main {
         background-color: #f8fafc;
     }
-    
+
     .stButton>button {
         background-color: #1e3a8a !important;
         color: white !important;
@@ -32,7 +36,7 @@ st.markdown("""
         padding: 0.5rem 2rem !important;
         font-weight: bold !important;
     }
-    
+
     .hero-container {
         background: linear-gradient(135deg, #1e3a8a 0%, #064e3b 100%);
         padding: 4rem 2rem;
@@ -41,7 +45,7 @@ st.markdown("""
         text-align: center;
         margin-bottom: 2rem;
     }
-    
+
     .propuesta-card {
         background-color: white;
         padding: 2rem;
@@ -51,7 +55,7 @@ st.markdown("""
         height: 100%;
         color: #1e293b;
     }
-    
+
     .eslogan {
         font-style: italic;
         color: #bfdbfe;
@@ -67,154 +71,21 @@ st.markdown("""
         font-size: 2rem;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
 
-# --- NAVEGACIÓN LATERAL ---
+# ===============================
+# SIDEBAR
+# ===============================
 with st.sidebar:
-    # Usamos una columna para centrar el logo
-    st.image("https://via.placeholder.com/150x150.png?text=AN", width=100) 
+    st.image("https://via.placeholder.com/150x150.png?text=AN", width=100)
     st.title("Harvey Colchado #1")
+
     menu = st.radio(
         "Ir a:",
         ["Inicio", "Propuestas", "Acciones", "Transparencia", "Donar"],
         key="main_menu"
     )
-    st.divider()
-    st.markdown("### Tumbando a la corrupción")
-    st.info("Marca el 1 de Ahora Nación 🗳️")
 
-# --- CONTENEDOR PRINCIPAL PARA EVITAR ERRORES DE RENDERIZADO ---
-main_container = st.container()
-
-with main_container:
-    # --- SECCIÓN: INICIO ---
-    if menu == "Inicio":
-        st.markdown("""
-            <div class="hero-container">
-                <p style='text-transform: uppercase; letter-spacing: 2px; font-weight: bold;'>Candidato al Congreso por Lima</p>
-                <h1 style='font-size: 4rem; margin: 0;'>Harvey <span style='color: #4ade80;'>Colchado</span></h1>
-                <p class="eslogan">"Tumbando a la corrupción desde adentro"</p>
-                <br>
-                <div style='display: flex; justify-content: center; align-items: center; gap: 20px;'>
-                    <span class="numero-uno">1</span>
-                    <span style='font-size: 1.5rem; font-weight: bold;'>AHORA NACIÓN</span>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            st.subheader("¿Quién es Harvey Colchado?")
-            st.write("""
-            Ex-coronel de la Policía Nacional con una trayectoria impecable en la lucha contra la criminalidad organizada. 
-            Líder de operativos históricos que han puesto a disposición de la justicia a las mafias que capturaron el Estado.
-            
-            Hoy, el desafío es legislativo: **limpiar las leyes para que ningún corrupto tenga refugio.**
-            """)
-        with col2:
-            st.image("https://via.placeholder.com/600x400.png?text=Foto+Candidato+en+Campo", use_container_width=True)
-
-    # --- SECCIÓN: PROPUESTAS ---
-    elif menu == "Propuestas":
-        st.title("🎯 Plan de Acción Legislativa")
-        st.write("Soluciones técnicas y valientes para los problemas del país.")
-        
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            st.markdown("""
-                <div class="propuesta-card">
-                    <h3>🛡️ Seguridad Total</h3>
-                    <p>Reforma de la ley de flagrancia y protección legal efectiva para los buenos policías.</p>
-                </div>
-            """, unsafe_allow_html=True)
-            
-        with col2:
-            st.markdown("""
-                <div class="propuesta-card">
-                    <h3>⚖️ Muerte Civil</h3>
-                    <p>Inhabilitación perpetua para todo funcionario sentenciado por corrupción. Sin retorno.</p>
-                </div>
-            """, unsafe_allow_html=True)
-            
-        with col3:
-            st.markdown("""
-                <div class="propuesta-card">
-                    <h3>🔍 Inteligencia Anti-Mafias</h3>
-                    <p>Fortalecimiento de las unidades de investigación para desmantelar bandas extorsionadoras.</p>
-                </div>
-            """, unsafe_allow_html=True)
-
-    # --- SECCIÓN: ACCIONES ---
-    elif menu == "Acciones":
-        st.title("📢 Acciones en Campo")
-        
-        historial = [
-            {"fecha": "2025-12-24", "evento": "Navidad en SJL", "desc": "Escuchando a las víctimas de extorsión."},
-            {"fecha": "2025-12-20", "evento": "Mesa Técnica", "desc": "Reunión con ex-operativos de inteligencia."},
-            {"fecha": "2025-12-15", "evento": "Lanzamiento", "desc": "Presentación oficial frente a la Fiscalía."}
-        ]
-        
-        for i, item in enumerate(historial):
-            with st.expander(f"{item['fecha']} - {item['evento']}", expanded=(i==0)):
-                st.write(item['desc'])
-                st.image(f"https://via.placeholder.com/400x200.png?text=Evidencia+{i+1}", width=300)
-
-    # --- SECCIÓN: TRANSPARENCIA ---
-    elif menu == "Transparencia":
-        st.title("💎 Cuentas Claras")
-        st.write("Porque para combatir la corrupción hay que ser transparente.")
-        
-        ingresos = 45200
-        gastos = 28150
-        
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Ingresos Totales", f"S/ {ingresos:,}", "5%", delta_color="normal")
-        c2.metric("Gastos Ejecutados", f"S/ {gastos:,}", "-2%", delta_color="inverse")
-        c3.metric("Saldo Campaña", f"S/ {ingresos - gastos:,}")
-        
-        st.subheader("Desglose de Gastos")
-        df_gastos = pd.DataFrame({
-            'Categoría': ['Publicidad Digital', 'Impresiones', 'Logística/Viajes', 'Mobiliario', 'Eventos'],
-            'Monto': [12000, 5000, 6150, 2000, 3000]
-        })
-        
-        fig = px.pie(df_gastos, values='Monto', names='Categoría', color_discrete_sequence=px.colors.sequential.RdBu)
-        st.plotly_chart(fig, use_container_width=True)
-        
-        st.subheader("Lista de Donantes Transparentes")
-        donantes = pd.DataFrame({
-            'Fecha': ['2025-12-22', '2025-12-21', '2025-12-20'],
-            'Aportante': ['Juan Carlos M.', 'Ana Lucía P.', 'Anónimo'],
-            'Monto (S/)': [500, 1200, 50]
-        })
-        st.table(donantes)
-
-    # --- SECCIÓN: DONAR ---
-    elif menu == "Donar":
-        st.title("🙌 Apoya la Causa")
-        st.markdown("Ayúdanos a mantener nuestra independencia de los grupos de poder.")
-        
-        col_a, col_b = st.columns(2)
-        
-        with col_a:
-            st.subheader("Métodos de Pago")
-            st.success("📱 **Yape/Plin:** 999 999 999")
-            st.info("🏦 **BCP:** 191-2345678-0-12")
-            st.warning("🏦 **CCI:** 002-191-2345678012-11")
-        
-        with col_b:
-            st.subheader("Registra tu Aporte")
-            with st.form("donation_form", clear_on_submit=True):
-                nombre = st.text_input("Nombre Completo")
-                dni = st.text_input("DNI")
-                monto = st.number_input("Monto Donado (S/)", min_value=1.0)
-                voucher = st.text_input("N° de Operación")
-                submitted = st.form_submit_button("Enviar Registro")
-                
-                if submitted:
-                    st.success("¡Gracias por tu aporte! Verificaremos la información para el portal de transparencia.")
-
-# Footer
-st.divider()
-st.markdown("<p style='text-align: center; color: gray;'>© 2026 Harvey Colchado - Candidato #1 Ahora Nación. Pagado por Ahora Nación.</p>", unsafe_allow_html=True)
+    st.divider(
